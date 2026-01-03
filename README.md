@@ -111,7 +111,7 @@ kubectl create secret tls argocd-server-tls \
 
 # Clean up the temporary files
 rm tls.crt tls.key
-``
+```
 
 6. Get ArgoCD login secret
 
