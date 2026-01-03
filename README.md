@@ -32,7 +32,23 @@ helm upgrade --install argocd ./bootstrap/argocd \
   --wait
 ```
 
-5. Get ArgoCD secrets
+5. Generate self signed certificate
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout tls.key -out tls.crt \
+  -subj "/CN=argocd.samssi.com"
+
+kubectl create secret tls argocd-server-tls \
+  --cert=tls.crt \
+  --key=tls.key \
+  -n argocd
+
+# Clean up the temporary files
+rm tls.crt tls.key
+``
+
+6. Get ArgoCD secrets
 
 ```
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
@@ -68,4 +84,10 @@ Update deployment manually:
 
 ```
 helm upgrade --install argocd ./bootstrap/argocd -n argocd
+```
+
+Restart proxy traefik:
+
+```
+kubectl rollout restart deployment traefik -n kube-system
 ```
