@@ -49,3 +49,12 @@ Render a template to see the resulting Kubernetes yamls eg. apps/podinfo:
 helm template podinfo ./apps/podinfo --debug
 ```
 
+Deploy to local arch linux Kubernets cluster the podinfo example:
+
+```
+helm upgrade --install podinfo ./apps/podinfo \
+  -f ./apps/podinfo/values.yaml \
+  -f ./environments/local-arch-linux/podinfo-values.yaml \
+  --namespace podinfo-poc --create-namespace
+```
+

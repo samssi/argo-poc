@@ -1,0 +1,24 @@
+ui:
+  message: "Hello from my Arch Linux k3d cluster!"
+  color: "#1793d1"
+
+replicaCount: 3
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+  hosts:
+    - host: podinfo.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
