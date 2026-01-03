@@ -1,0 +1,5 @@
+# Ignore the local cache of dependencies
+**/charts/*.tgz
+**/charts/
+# Ignore the lock file if you want to always pull the absolute latest
+**/Chart.lock

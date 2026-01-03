@@ -1,0 +1,19 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: poc-cluster
+image: rancher/k3s:v1.31.0-k3s1 # Modern K3s version
+ports:
+  - port: 8080:80 # Map host 8080 to K8s HTTP (Traefik)
+    nodeFilters:
+      - loadbalancer
+  - port: 8443:443 # Map host 8443 to K8s HTTPS (Traefik)
+    nodeFilters:
+      - loadbalancer
+options:
+  k3s:
+    extraArgs:
+      - arg: --disable=servicelb # We'll use k3d's own loadbalancer
+        nodeFilters:
+          - server:*
+

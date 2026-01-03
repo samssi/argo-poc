@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/stefanprodan/podinfo
+  tag: 6.7.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 9898 # Podinfo listens on 9898 by default
+
+ingress:
+  enabled: true
+  className: "traefik"
+  hosts:
+    - host: localhost
+      paths:
+        - path: /
+          pathType: Prefix
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+serviceAccount:
+  create: false
+  name: ""
