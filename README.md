@@ -21,15 +21,14 @@ sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
 ```
 
-4. Install ArgoCD using helm
+4. Install ArgoCD
 ```
-helm repo add argo https://argoproj.github.io/argo-helm
-helm install argocd argo/argo-cd -n argocd --wait
-```
+helm dependency build ./bootstrap/argocd
 
-5. Create namespace for ArgoCD
-```
-kubectl create namespace argocd
+helm upgrade --install argocd ./bootstrap/argocd \
+  --namespace argocd \
+  --create-namespace \
+  --wait
 ```
 
 ## Helm cheat sheet
@@ -58,3 +57,8 @@ helm upgrade --install podinfo ./apps/podinfo \
   --namespace podinfo-poc --create-namespace
 ```
 
+Update deployment manually:
+
+```
+helm upgrade --install argocd ./bootstrap/argocd -n argocd
+```
