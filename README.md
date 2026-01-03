@@ -22,6 +22,7 @@ sudo usermod -aG docker $USER
 ```
 
 4. Install ArgoCD
+
 ```
 helm dependency build ./bootstrap/argocd
 
@@ -29,6 +30,12 @@ helm upgrade --install argocd ./bootstrap/argocd \
   --namespace argocd \
   --create-namespace \
   --wait
+```
+
+5. Get ArgoCD secrets
+
+```
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
 ## Helm cheat sheet
