@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: local-arch-app-factory
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: 'git@github.com:samssi/argo-poc.git'
+        revision: HEAD
+        directories:
+          - path: helm/apps/*
+  template:
+    metadata:
+      # {{path.basename}} will be the folder name (e.g., 'podinfo')
+      name: '{{path.basename}}-arch'
+    spec:
+      project: default
+      source:
+        repoURL: 'git@github.com:samssi/argo-poc.git'
+        targetRevision: HEAD
+        path: '{{path.path}}'
+        helm:
+          valueFiles:
+            - values.yaml
+            # Dynamically look for the matching environment file
+            - '../../environments/local-arch-linux/{{path.basename}}.yaml'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}-poc'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
