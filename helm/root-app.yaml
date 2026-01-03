@@ -9,6 +9,8 @@ spec:
     repoURL: 'git@github.com:samssi/argo-poc.git'
     targetRevision: HEAD
     path: helm/bootstrap/argocd
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
