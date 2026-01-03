@@ -19,7 +19,7 @@ spec:
       source:
         repoURL: 'git@github.com:samssi/argo-poc.git'
         targetRevision: HEAD
-        path: '{{path.path}}'
+        path: '{{path}}'
         helm:
           valueFiles:
             - values.yaml
