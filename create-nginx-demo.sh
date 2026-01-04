@@ -47,3 +47,9 @@ EOF
 
 # 4. Create an empty values file (to satisfy the ApplicationSet)
 touch helm/apps/nginx-demo/values.yaml
+
+# 5. Create environment setup for local arch linux
+mkdir -p helm/environments/local-arch-linux/
+cat <<EOF > helm/environments/local-arch-linux/nginx-demo.yaml
+# Add env settings if required
+EOF
